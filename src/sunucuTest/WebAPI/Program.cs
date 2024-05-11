@@ -13,6 +13,7 @@ using NArchitecture.Core.Security.WebApi.Swagger.Extensions;
 using Persistence;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using WebAPI;
+using WebAPI.MigrationExtensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -42,23 +43,22 @@ builder.Services.AddCors(opt =>
 builder.Services.AddSwaggerGen(opt =>
 {
 });
-
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
+
     app.UseSwagger();
     app.UseSwaggerUI(opt =>
     {
         opt.DocExpansion(DocExpansion.None);
     });
-}
+app.ApplyMigrations();
 
 if (app.Environment.IsProduction())
     app.ConfigureCustomExceptionMiddleware();
 
-app.UseDbMigrationApplier();
+//app.UseDbMigrationApplier();
 
 
 app.MapControllers();

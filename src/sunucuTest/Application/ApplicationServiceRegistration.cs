@@ -15,6 +15,7 @@ using NArchitecture.Core.ElasticSearch.Models;
 using NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection;
 using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
+using Application.Services.Denemes;
 
 namespace Application;
 
@@ -50,6 +51,7 @@ public static class ApplicationServiceRegistration
 
         services.AddYamlResourceLocalization();
 
+        services.AddScoped<IDenemeService, DenemeManager>();
         return services;
     }
 
